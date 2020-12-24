@@ -1,0 +1,96 @@
+﻿@model CreditCalculator.Models.AnnuityLoan
+
+@{
+    ViewData["Title"] = Html.DisplayNameForModel();
+}
+
+@using (Html.BeginForm("Index", "AnnuityLoan", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+    <h4>@Html.DisplayNameForModel()</h4>
+    <hr />
+    <div class="form-row">
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Amount, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Rate, new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Rate, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rate, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Term, new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Term, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Term, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <input type="submit" value="Рассчитать" class="form-group btn btn-outline-primary col" />
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Payments[0].Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payments[0].PaymentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payments[0].Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payments[0].MainDebt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payments[0].Percent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payments[0].Debt)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Payments)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MainDebt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Percent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Debt)
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-right">
+                @Html.DisplayNameFor(model => model.OverpaymentAmount)
+                @Html.DisplayFor(model => model.OverpaymentAmount)
+            </td>
+        </tr>
+    </tfoot>
+</table>
+@await Html.PartialAsync("_ValidationScriptsPartial")
